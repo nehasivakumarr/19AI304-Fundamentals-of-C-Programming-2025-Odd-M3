@@ -28,7 +28,33 @@ To formulate a C program to convert a decimal number into its binary equivalent 
 ### Step 8: 
    Stop
 # Program:
+```
+#include<stdio.h>
+
+int main(){
+    int num, rem, i = 0, k;
+    int binary[32];
+    
+    scanf("%d", &num);
+    int n = num; 
+    
+    while(num > 0){
+        rem = num % 2;
+        binary[i] = rem;
+        i++;
+        num = num / 2;
+    }
+    
+    for(k = i - 1; k >= 0; k--)
+        printf("%d", binary[k]);
+    
+    printf("\n");
+    return 0;
+}
+```
 # Output:
+<img width="217" height="77" alt="image" src="https://github.com/user-attachments/assets/419d0189-83b8-48ae-9b73-5b645ad86478" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -67,7 +93,69 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 9: 
   Stop
 # Program:
+```
+#include<stdio.h>
+
+int main(){
+    int i, j, k, m, min, max;
+    int pos[2][2];
+
+    scanf("%d", &m);
+    int mat[m][m];
+
+    for(i = 0; i < m; i++)
+        for(j = 0; j < m; j++)
+            scanf("%d", &mat[i][j]);
+
+    printf("Matrix:\n");
+    for(i = 0; i < m; i++){
+        for(j = 0; j < m; j++)
+            printf("%d ", mat[i][j]);
+        printf("\n");
+    }
+
+    int found = 0;
+
+    for(i = 0; i < m; i++){
+        min = mat[i][0];
+        pos[0][0] = i;
+        pos[0][1] = 0;
+
+        for(j = 1; j < m; j++){
+            if(mat[i][j] < min){
+                min = mat[i][j];
+                pos[0][1] = j;
+            }
+        }
+
+        j = pos[0][1];
+        max = mat[0][j];
+        pos[1][0] = 0;
+        pos[1][1] = j;
+
+        for(k = 1; k < m; k++){
+            if(mat[k][j] > max){
+                max = mat[k][j];
+                pos[1][0] = k;
+            }
+        }
+
+        if(min == max && pos[0][0] == pos[1][0]){
+            printf("Saddle point: %d at position (%d,%d)\n", min, i, j);
+            found = 1;
+            break;
+        }
+    }
+
+    if(!found)
+        printf("No saddle point found\n");
+
+    return 0;
+}
+```
 # Output:
+<img width="399" height="330" alt="image" src="https://github.com/user-attachments/assets/f2036a97-bb95-4483-aaa4-c25209d90a2f" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -101,7 +189,32 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10: 
   Stop
 # Program:
+```
+#include<stdio.h>
+
+int main(){
+    char s[100], d[100];
+    int i, j = 0, len = 0;
+
+    scanf("%[^\n]s", s);
+
+    while(s[len] != '\0')
+        len++;
+
+    for(i = len - 1; i >= 0; i--){
+        d[j] = s[i];
+        j++;
+    }
+    d[j] = '\0';
+
+    printf("%s\n", d);
+    return 0;
+}
+
+```
 # Output:
+<img width="351" height="124" alt="image" src="https://github.com/user-attachments/assets/2d359a84-f7e9-4f16-b83a-d596586a0b85" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -135,7 +248,36 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8:
   Stop
 # Program:
+```
+#include<stdio.h>
+#include<string.h>
+
+int main(){
+    char s[100];
+    int visited[256] = {0};
+    int i, j, n, count;
+
+    scanf("%[^\n]", s);
+    n = strlen(s);
+
+    for(i = 0; i < n; i++){
+        if(visited[(unsigned char)s[i]] == 0){
+            count = 0;
+            for(j = 0; j < n; j++){
+                if(s[i] == s[j])
+                    count++;
+            }
+            printf("%c: %d\n", s[i], count);
+            visited[(unsigned char)s[i]] = 1;
+        }
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="166" height="274" alt="image" src="https://github.com/user-attachments/assets/67c57ebe-d0f5-44da-a093-e65a248fa313" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -169,7 +311,52 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8: 
   Stop
 # Program:
+```
+#include<stdio.h>
+#include<string.h>
+
+int main(){
+    char str[200], words[50][50];
+    int i = 0, j = 0, k = 0, wordCount = 0;
+
+    scanf("%[^\n]s", str);
+
+    while(str[i] != '\0'){
+        if(str[i] == ' '){
+            words[wordCount][j] = '\0';
+            wordCount++;
+            j = 0;
+        } else {
+            words[wordCount][j] = str[i];
+            j++;
+        }
+        i++;
+    }
+    words[wordCount][j] = '\0';
+    wordCount++;
+
+    for(i = 0; i < wordCount; i++){
+        if(words[i][0] == '\0') continue;
+        for(j = i + 1; j < wordCount; j++){
+            if(strcmp(words[i], words[j]) == 0){
+                words[j][0] = '\0';
+            }
+        }
+    }
+
+    for(i = 0; i < wordCount; i++){
+        if(words[i][0] != '\0')
+            printf("%s ", words[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+```
 # Output:
+<img width="435" height="123" alt="image" src="https://github.com/user-attachments/assets/5f395543-07e2-450d-a56f-84e24245a36a" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
